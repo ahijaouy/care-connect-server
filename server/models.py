@@ -43,7 +43,7 @@ class Activity(models.Model):
     elderly = models.OneToOneField(Elderly, on_delete=models.CASCADE)
     caretaker = models.OneToOneField(Caretaker, on_delete=models.CASCADE)
     duration = models.DurationField()
-    date = models.DateField()
+    date = models.DateTimeField()
 
     def __str__(self):
         return self.activityType + " on " + self.date
@@ -61,7 +61,7 @@ class Comment(models.Model):
 class QuizResponse(models.Model):
     elderly = models.OneToOneField(Elderly, on_delete=models.CASCADE)
     caretaker = models.OneToOneField(Caretaker, on_delete=models.CASCADE)
-    date = models.DateField()
+    date = models.DateTimeField()
     q1 = models.TextField(max_length=250, blank=False)
     q2 = models.TextField(max_length=250, blank=False)
     q3 = models.TextField(max_length=250, blank=False)
