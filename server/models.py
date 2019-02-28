@@ -5,7 +5,7 @@ from django.db import models
 class Caretaker(models.Model):
     """ Model for a Caretaker """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.TextField(max_length=100, blank=False)
+    name = models.TextField(max_length=70, blank=False)
 
     def __str__(self):
         return self.name
@@ -13,16 +13,17 @@ class Caretaker(models.Model):
 
 class Elderly(models.Model):
     """ Model for an Elderly """
-    name = models.TextField(max_length=100, blank=False)
+    name = models.TextField(max_length=70, blank=False)
     birth_date = models.DateField()
 
     def __str__(self):
         return self.name
 
+
 class FamilyMember(models.Model):
     """ Model for a Family Member """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.TextField(max_length=100, blank=False)
+    name = models.TextField(max_length=70, blank=False)
     elderly = models.OneToOneField(Elderly, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -30,7 +31,7 @@ class FamilyMember(models.Model):
 
 
 class ActivityType(models.Model):
-    name = models.TextField(max_length=80, blank=False)
+    name = models.TextField(max_length=70, blank=False)
     description = models.TextField(max_length=250, blank=False)
     img_url = models.TextField(blank=True)
 
@@ -43,17 +44,18 @@ class Activity(models.Model):
     elderly = models.ForeignKey(Elderly, on_delete=models.CASCADE)
     caretaker = models.ForeignKey(Caretaker, on_delete=models.CASCADE)
     duration = models.DurationField()
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return (str(self.activityType) + " by " + str(self.elderly) + " on "
-                + str(self.date))
+                + self.date.strftime("%Y-%m-%d %H:%M:%S"))
+
 
 class Comment(models.Model):
     elderly = models.ForeignKey(Elderly, on_delete=models.CASCADE)
     caretaker = models.ForeignKey(Caretaker, on_delete=models.CASCADE)
     note = models.TextField(max_length=250, blank=False)
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.note[:10] + "..."
@@ -62,8 +64,11 @@ class Comment(models.Model):
 class QuizResponse(models.Model):
     elderly = models.ForeignKey(Elderly, on_delete=models.CASCADE)
     caretaker = models.ForeignKey(Caretaker, on_delete=models.CASCADE)
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=True)
     q1 = models.TextField(max_length=250, blank=False)
     q2 = models.TextField(max_length=250, blank=False)
     q3 = models.TextField(max_length=250, blank=False)
     q4 = models.TextField(max_length=250, blank=False)
+
+    def __str__(self):
+        return "Quiz Response for " + str(self.elderly) + " from " + self.date.strftime("%Y-%m-%d %H:%M:%S")
