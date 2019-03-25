@@ -65,10 +65,14 @@ class QuizResponse(models.Model):
     elderly = models.ForeignKey(Elderly, on_delete=models.CASCADE)
     caretaker = models.ForeignKey(Caretaker, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
-    q1 = models.TextField(max_length=250, blank=False)
-    q2 = models.TextField(max_length=250, blank=False)
-    q3 = models.TextField(max_length=250, blank=False)
-    q4 = models.TextField(max_length=250, blank=False)
+    q1_attentive = models.BooleanField(default=True)
+    q2_hope = models.BooleanField(default=True)
+    q3_empathetic = models.BooleanField(default=True)
+    q4_humor = models.BooleanField(default=True)
+    q5_anxiety = models.BooleanField(default=True)
+    q6_sleep = models.BooleanField(default=True)
+    q7_appetite = models.BooleanField(default=True)
+    q8_mood = models.IntegerField()
 
     def __str__(self):
         return "Quiz Response for " + str(self.elderly) + " from " + self.date.strftime("%Y-%m-%d %H:%M:%S")
