@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 
 
 class Caretaker(models.Model):
@@ -44,7 +45,7 @@ class Activity(models.Model):
     elderly = models.ForeignKey(Elderly, on_delete=models.CASCADE)
     caretaker = models.ForeignKey(Caretaker, on_delete=models.CASCADE)
     duration = models.DurationField()
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return (str(self.activityType) + " by " + str(self.elderly) + " on "
@@ -55,7 +56,7 @@ class Comment(models.Model):
     elderly = models.ForeignKey(Elderly, on_delete=models.CASCADE)
     caretaker = models.ForeignKey(Caretaker, on_delete=models.CASCADE)
     note = models.TextField(max_length=250, blank=False)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.note[:10] + "..."
@@ -64,7 +65,7 @@ class Comment(models.Model):
 class QuizResponse(models.Model):
     elderly = models.ForeignKey(Elderly, on_delete=models.CASCADE)
     caretaker = models.ForeignKey(Caretaker, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(default=timezone.now)
     q1_attentive = models.BooleanField(default=True)
     q2_hope = models.BooleanField(default=True)
     q3_empathetic = models.BooleanField(default=True)
