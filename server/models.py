@@ -73,7 +73,8 @@ class QuizResponse(models.Model):
     q4_humor = models.BooleanField(default=True)
     q5_anxiety = models.BooleanField(default=True)
     q6_sleep = models.BooleanField(default=True)
-    q7_appetite = models.BooleanField(default=True)
+    # q7_appetite = models.BooleanField(default=True)
+    q7_appetite = models.IntegerField(default=0)
     q8_mood = models.IntegerField()
 
     def __str__(self):
