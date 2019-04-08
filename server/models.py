@@ -16,6 +16,7 @@ class Elderly(models.Model):
     """ Model for an Elderly """
     name = models.TextField(max_length=70, blank=False)
     birth_date = models.DateField()
+    picture = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
