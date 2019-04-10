@@ -61,6 +61,6 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 class QuizResponseViewSet(viewsets.ModelViewSet):
     """ API endpoint that allows QuizResponses to be viewed or edited. """
-    queryset = QuizResponse.objects.all()
+    queryset = QuizResponse.objects.all().order_by('-date')
     serializer_class = QuizResponseSerializer
     filter_fields = ("elderly", "caretaker", "date")
